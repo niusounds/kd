@@ -1,5 +1,6 @@
 package com.niusounds.kd
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -67,6 +68,10 @@ class Kd(
 
                     nodes.forEach { it.process(audio) }
                 }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                e.printStackTrace()
             } finally {
                 nodes.forEach { it.release() }
             }
