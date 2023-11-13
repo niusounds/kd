@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "My Application"
-include(":app")
+rootProject.name = "kd"
 include(":kd")
-include(":kd-sample")
+include(":kd-sample-android")
+include(":kd-sample-jvm")
