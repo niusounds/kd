@@ -5,5 +5,6 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
     alias(libs.plugins.jetbrainsKotlinJvm) apply false
     alias(libs.plugins.androidLibrary) apply false
+    kotlin("multiplatform") version libs.versions.kotlin apply false
 }
 true // Needed to make the Suppress annotation work for the plugins block

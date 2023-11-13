@@ -5,7 +5,7 @@ import android.media.AudioTrack
 import com.niusounds.kd.AudioConfig
 import com.niusounds.kd.Node
 
-class AudioOutput : Node {
+actual class AudioOutput : Node {
 
     private lateinit var audioTrack: AudioTrack
 

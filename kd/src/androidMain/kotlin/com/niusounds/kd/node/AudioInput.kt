@@ -7,13 +7,9 @@ import android.media.MediaRecorder
 import com.niusounds.kd.AudioConfig
 import com.niusounds.kd.Node
 
-class AudioInput(
-    private val source: Source = Source.Default,
+actual class AudioInput actual constructor(
+    private val source: Source,
 ) : Node {
-
-    enum class Source {
-        Default, VoiceCommunication
-    }
 
     private lateinit var audioRecord: AudioRecord
 
