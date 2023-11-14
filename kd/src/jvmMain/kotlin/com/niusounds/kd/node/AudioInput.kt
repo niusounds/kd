@@ -9,7 +9,7 @@ import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.TargetDataLine
 
-actual class AudioInput actual constructor(source: Source) : Node {
+actual class AudioInput : Node {
     private lateinit var targetDataLine: TargetDataLine
     private lateinit var readShortBuffer: ShortBuffer
     private lateinit var readBufferArray: ByteArray
