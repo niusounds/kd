@@ -12,9 +12,6 @@ class StereoPanner : Node {
         enabled = config.channels == 2
     }
 
-    override fun start() {
-    }
-
     override fun process(audio: FloatArray) {
         if (!enabled) return
 
@@ -30,11 +27,5 @@ class StereoPanner : Node {
                 audio[i + 1] *= (1.0f + value).coerceIn(0.0f, 1.0f)
             }
         }
-    }
-
-    override fun stop() {
-    }
-
-    override fun release() {
     }
 }

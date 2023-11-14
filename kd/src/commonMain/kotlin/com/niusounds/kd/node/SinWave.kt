@@ -18,9 +18,6 @@ class SinWave : Node {
         dt = 1.0 / config.sampleRate.toDouble()
     }
 
-    override fun start() {
-    }
-
     override fun process(audio: FloatArray) {
         for (i in audio.indices step channels) {
             val sample = sin(t * frequency * 2 * PI).toFloat() * gain
@@ -29,11 +26,5 @@ class SinWave : Node {
             }
             t += dt
         }
-    }
-
-    override fun stop() {
-    }
-
-    override fun release() {
     }
 }

@@ -16,11 +16,11 @@ data class AudioConfig(
 )
 
 interface Node {
-    fun configure(config: AudioConfig)
-    fun start()
+    fun configure(config: AudioConfig) {}
+    fun start() {}
     fun process(audio: FloatArray)
-    fun stop()
-    fun release()
+    fun stop() {}
+    fun release() {}
 }
 
 fun Kd(
