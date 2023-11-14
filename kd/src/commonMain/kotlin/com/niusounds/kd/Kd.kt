@@ -1,5 +1,6 @@
 package com.niusounds.kd
 
+import com.niusounds.kd.node.Group
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,7 +33,7 @@ fun Kd(
 class Kd(
     private val config: AudioConfig,
 ) {
-    private var nodes = listOf<Node>()
+    private var nodes = Group(emptyList())
     private val stopped = MutableStateFlow(false)
 
     fun add(node: Node) {
@@ -55,25 +56,25 @@ class Kd(
             try {
                 val audio = FloatArray(config.frameSize * config.channels)
 
-                nodes.forEach { it.configure(config) }
-                nodes.forEach { it.start() }
+                nodes.configure(config)
+                nodes.start()
 
                 while (coroutineContext.isActive) {
 
                     if (stopped.value) {
-                        nodes.forEach { it.stop() }
+                        nodes.stop()
                         stopped.first { !it } // wait until stopped.value = false
-                        nodes.forEach { it.start() }
+                        nodes.start()
                     }
 
-                    nodes.forEach { it.process(audio) }
+                    nodes.process(audio)
                 }
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                nodes.forEach { it.release() }
+                nodes.release()
             }
         }
     }
