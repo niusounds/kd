@@ -32,8 +32,22 @@ class ReaStreamAudioPacket(
             val blockLength = bytes.toShort(45)
 
             val sizeInFloats = blockLength.toInt() / Float.SIZE_BYTES
-            val samples = FloatArray(sizeInFloats) { index ->
-                bytes.toFloat(47 + index * Float.SIZE_BYTES)
+            val samples = if (channels == 1) {
+                FloatArray(sizeInFloats) { index ->
+                    bytes.toFloat(47 + index * Float.SIZE_BYTES)
+                }
+            } else {
+                val out = FloatArray(sizeInFloats)
+                var bytesIndex = 47
+                repeat(channels) { ch ->
+                    val frameSize = sizeInFloats / channels
+                    repeat(frameSize) { i ->
+                        val dstIndex = i * channels + ch
+                        out[dstIndex] = bytes.toFloat(bytesIndex)
+                        bytesIndex += Float.SIZE_BYTES
+                    }
+                }
+                out
             }
 
             return ReaStreamAudioPacket(
@@ -47,7 +61,7 @@ class ReaStreamAudioPacket(
 }
 
 //  4byte (Little Endian)
-fun ByteArray.toInt(index: Int): Int {
+private fun ByteArray.toInt(index: Int): Int {
     var result: Int = 0
     for (i in 0..3) {
         result = result or (get(i + index).toUByte().toInt() shl 8 * i)
@@ -56,7 +70,7 @@ fun ByteArray.toInt(index: Int): Int {
 }
 
 //  2byte (Little Endian)
-fun ByteArray.toShort(index: Int): Short {
+private fun ByteArray.toShort(index: Int): Short {
     var result: Int = 0
     for (i in 0..1) {
         result = result or (get(i + index).toUByte().toInt() shl 8 * i)
@@ -65,4 +79,4 @@ fun ByteArray.toShort(index: Int): Short {
 }
 
 //  4byte (Little Endian)
-fun ByteArray.toFloat(index: Int): Float = Float.fromBits(toInt(index))
+private fun ByteArray.toFloat(index: Int): Float = Float.fromBits(toInt(index))
