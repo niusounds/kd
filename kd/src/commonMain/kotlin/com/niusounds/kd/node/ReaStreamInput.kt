@@ -15,19 +15,8 @@ class ReaStreamInput(
     private val identifier: String = "default",
     bufferSize: Int = 16,
     context: CoroutineContext = Dispatchers.IO,
-    onReadyToProcess: () -> Unit = {},
-    onUnderflow: () -> Unit = {},
-) : BufferedInputNode(bufferSize, context, onReadyToProcess, onUnderflow) {
-    private var configuredSampleRate: Int = 0
-    private var configuredChannels: Int = 0
-
-    override fun configure(config: AudioConfig) {
-        super.configure(config)
-        configuredSampleRate = config.sampleRate
-        configuredChannels = config.channels
-    }
-
-    override suspend fun Channel<FloatArray>.asyncInput() {
+) : CoroutineInputNode(bufferSize, context) {
+    override suspend fun Channel<FloatArray>.process(config: AudioConfig) {
         val server = aSocket(ActorSelectorManager(context))
             .udp()
             .bind(InetSocketAddress("", port))
@@ -36,7 +25,7 @@ class ReaStreamInput(
             val bytes = data.packet.readBytes()
             val packet = ReaStreamAudioPacket.readFromBytes(bytes)
             val samples = packet?.samples ?: continue
-            if (packet.identifier == identifier && packet.sampleRate == configuredSampleRate && packet.channels == configuredChannels) {
+            if (packet.identifier == identifier && packet.sampleRate == config.sampleRate && packet.channels == config.channels) {
                 send(samples)
             }
         }
