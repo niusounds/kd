@@ -4,16 +4,19 @@ import com.niusounds.kd.AudioConfig
 import com.niusounds.kd.Node
 
 /**
- * 加工Node
- * 一連のNodeを一塊のNodeとして扱う。
- * 最後のNodeの出力内容がこのNodeの出力となる。
+ * 直前のNodeからの入力を複数のNodeに枝分かれさせる。
+ * [nodes]間の[process]出力はお互いに影響しない。
+ * このNode自体は入力を加工しない。
  */
-class Group(
+class Split(
     private val nodes: List<Node>,
 ) : Node {
     constructor(vararg nodes: Node) : this(nodes.toList())
 
+    private lateinit var tempBuffers: List<FloatArray>
+
     override fun configure(config: AudioConfig) {
+        tempBuffers = List(nodes.size) { FloatArray(config.frameSize * config.channels) }
         nodes.forEach { it.configure(config) }
     }
 
@@ -22,7 +25,10 @@ class Group(
     }
 
     override fun process(audio: FloatArray) {
-        nodes.forEach { it.process(audio) }
+        tempBuffers.forEachIndexed { index, tempBuffer ->
+            audio.copyInto(tempBuffer)
+            nodes[index].process(tempBuffer)
+        }
     }
 
     override fun stop() {
@@ -31,9 +37,5 @@ class Group(
 
     override fun release() {
         nodes.forEach { it.release() }
-    }
-
-    operator fun plus(node: Node): Group {
-        return Group(nodes + node)
     }
 }

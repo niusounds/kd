@@ -12,6 +12,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * 入力Node
+ * Coroutinesにより非同期に音声データを読み取る。
+ */
 abstract class CoroutineInputNode(
     private val bufferSize: Int = 16,
     protected val context: CoroutineContext = Dispatchers.IO,
@@ -81,6 +85,9 @@ abstract class CoroutineInputNode(
         }
     }
 
+    /**
+     * [config]に合致する音声データを[Channel.send]で送信し続ける処理。
+     */
     abstract suspend fun Channel<FloatArray>.process(config: AudioConfig)
 
     override fun release() {
