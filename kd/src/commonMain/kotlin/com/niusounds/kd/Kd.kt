@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Executors
-import kotlin.time.Duration
 
 data class AudioConfig(
     val sampleRate: Int = 48000,

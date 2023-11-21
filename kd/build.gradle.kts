@@ -14,6 +14,13 @@ kotlin {
     jvm()
 
     sourceSets {
+        val jvmAndAndroid by creating {
+            dependsOn(commonMain.get())
+        }
+
+        androidMain.get().dependsOn(jvmAndAndroid)
+        jvmMain.get().dependsOn(jvmAndAndroid)
+
         commonMain {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
@@ -32,8 +39,18 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-    }
 
+        externalNativeBuild {
+            cmake {
+                cppFlags("")
+            }
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path("src/androidMain/CMakeLists.txt")
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false

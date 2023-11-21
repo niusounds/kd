@@ -20,6 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import com.niusounds.kd.Kd
 import com.niusounds.kd.node.AudioInput
 import com.niusounds.kd.node.AudioOutput
+import com.niusounds.kd.node.SimplePitchShifterNode
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
                 lifecycleScope.launch {
                     Kd {
                         add(AudioInput())
+                        add(SimplePitchShifterNode().apply { pitch = 2.0 })
                         add(AudioOutput())
                     }.launch()
                 }
