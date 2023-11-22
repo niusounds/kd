@@ -15,3 +15,14 @@ add_library(
 )
 
 target_link_libraries(wdl log)
+
+add_subdirectory(../../../externals/opus build)
+include_directories(
+        ../../../externals/opus/include
+)
+add_library(
+        opus_jni SHARED
+        ../../../jni/opus_encoder.cpp
+)
+
+target_link_libraries(opus_jni opus)

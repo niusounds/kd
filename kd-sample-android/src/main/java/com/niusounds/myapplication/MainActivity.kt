@@ -2,6 +2,7 @@ package com.niusounds.myapplication
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import com.niusounds.kd.Kd
 import com.niusounds.kd.node.AudioInput
 import com.niusounds.kd.node.AudioOutput
+import com.niusounds.kd.node.OpusOutput
 import com.niusounds.kd.node.SimplePitchShifterNode
 import kotlinx.coroutines.launch
 
@@ -27,12 +29,19 @@ class MainActivity : ComponentActivity() {
     private val permission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
+                val opusOutput = OpusOutput()
                 lifecycleScope.launch {
                     Kd {
                         add(AudioInput())
                         add(SimplePitchShifterNode().apply { pitch = 2.0 })
                         add(AudioOutput())
+                        add(opusOutput)
                     }.launch()
+                }
+                lifecycleScope.launch {
+                    opusOutput.flow.collect { res ->
+                        Log.d("OpusEncode", "${res.size}")
+                    }
                 }
             }
         }
