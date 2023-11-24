@@ -1,5 +1,7 @@
 package com.niusounds.kd.opus
 
+import com.niusounds.kd.util.loadNative
+
 class OpusEncoder(
     fs: Int,
     channels: Int,
@@ -42,7 +44,7 @@ class OpusEncoder(
 
     companion object {
         init {
-            System.loadLibrary("opus_jni")
+            loadNative("opus_jni")
         }
     }
 }

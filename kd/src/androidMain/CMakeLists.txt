@@ -14,7 +14,7 @@ add_library(
         ../../../jni/wdl_sinewavegen.cpp
 )
 
-target_link_libraries(wdl log)
+target_link_libraries(wdl)
 
 add_subdirectory(../../../externals/opus build)
 include_directories(
