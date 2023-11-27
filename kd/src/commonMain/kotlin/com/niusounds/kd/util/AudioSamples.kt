@@ -32,11 +32,16 @@ fun FloatArray.deinterleave(out: FloatArray, channels: Int) {
 fun FloatArray.extractSingleChannel(out: FloatArray, channels: Int, outChannel: Int) {
     check(channels > 0) { "channels must be greater than 0" }
 
-    val frameSize = size / channels
-    check(frameSize == out.size) { "out FloatArray must have size of $frameSize" }
-
-    repeat(frameSize) { i ->
+    for (i in out.indices) {
         out[i] = get(i * channels + outChannel)
+    }
+}
+
+fun FloatArray.writeSingleChannel(source: FloatArray, allChannels: Int, writeChannel: Int) {
+    check(allChannels > 0) { "allChannels must be greater than 0" }
+
+    source.forEachIndexed { index, sample ->
+        set(index * allChannels + writeChannel, sample)
     }
 }
 
