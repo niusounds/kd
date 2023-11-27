@@ -11,7 +11,14 @@ kotlin {
             }
         }
     }
-    jvm()
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "17"
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnitPlatform()
+        }
+    }
 
     sourceSets {
         val jvmAndAndroid by creating {
@@ -25,6 +32,11 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.network)
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation(kotlin("test-junit5"))
             }
         }
     }
