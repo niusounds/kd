@@ -37,6 +37,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test-junit5"))
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
     }

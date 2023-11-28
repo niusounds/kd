@@ -2,12 +2,12 @@ package com.niusounds.kd
 
 import com.niusounds.kd.node.Group
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
-import java.util.concurrent.Executors
+import kotlin.coroutines.CoroutineContext
 
 data class AudioConfig(
     val sampleRate: Int = 48000,
@@ -51,13 +51,15 @@ interface Node {
 
 fun Kd(
     config: AudioConfig = AudioConfig(),
+    coroutineContext: CoroutineContext = Dispatchers.IO,
     setup: Kd.() -> Unit,
 ): Kd {
-    return Kd(config).apply(setup)
+    return Kd(config, coroutineContext).apply(setup)
 }
 
 class Kd(
     private val config: AudioConfig,
+    private val coroutineContext: CoroutineContext,
 ) {
     private var nodes = Group(emptyList())
     private val stopped = MutableStateFlow(false)
@@ -73,9 +75,6 @@ class Kd(
     fun stop() {
         stopped.value = true
     }
-
-    private val executor = Executors.newSingleThreadExecutor()
-    private val coroutineContext = executor.asCoroutineDispatcher()
 
     suspend fun launch() {
         withContext(coroutineContext) {
@@ -103,10 +102,5 @@ class Kd(
                 nodes.release()
             }
         }
-    }
-
-    fun release() {
-        stop()
-        executor.shutdown()
     }
 }
