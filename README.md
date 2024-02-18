@@ -9,6 +9,7 @@ This project is created for my researching:
 - Audio signal processing
 - [kotlin.test](https://kotlinlang.org/api/latest/kotlin.test/) library
 - C++ programming on Windows
+- Next-generation library that builds on the capabilities of [libReaStream](https://github.com/niusounds/libReaStream) and [wdl-android](https://github.com/niusounds/wdl-android)
 
 ## Motivation
 
@@ -28,6 +29,8 @@ Kd {
 graph LR
    AudioInput --> AudioOutput
 ```
+
+## Examples
 
 ```kotlin
 // Generate 440hz sine wave and play it
@@ -68,7 +71,7 @@ Kd(config = AudioConfig(channels = 2, sampleRate = 48000)) {
 }.launch()
 ```
 
-## build native (JVM)
+## How to build native library (for JVM)
 
 ```shell
 mkdir build
