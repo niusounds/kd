@@ -2,5 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "groupName": "Kotlin",
+      "matchPackagePrefixes": [
+        "org.jetbrains.kotlin",
+        "composeOptions"
+      ]
+    }
   ]
 }
