@@ -72,9 +72,6 @@ class Kd(
 ) {
     private val stopped = MutableStateFlow(false)
 
-    fun add(node: Node) {
-    }
-
     fun start() {
         stopped.value = false
     }
