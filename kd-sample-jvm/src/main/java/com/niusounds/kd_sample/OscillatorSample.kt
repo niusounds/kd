@@ -13,10 +13,17 @@ fun main(args: Array<String>) {
     runBlocking {
         Kd(config = AudioConfig(channels = 2, sampleRate = 44100)) {
             when (oscType) {
-                "sin" -> add(SinWave().apply { gain = 0.1f; frequency = 440f })
-                "whitenoise" -> add(WhiteNoise().apply { gain = 0.1f })
-            }
-            add(AudioOutput())
+                "sin" -> SinWave().apply {
+                    gain = 0.1f
+                    frequency = 440f
+                }
+
+                "whitenoise" -> WhiteNoise().apply {
+                    gain = 0.1f
+                }
+
+                else -> error("Unknown oscillator type")
+            } + AudioOutput()
         }.launch()
     }
 }

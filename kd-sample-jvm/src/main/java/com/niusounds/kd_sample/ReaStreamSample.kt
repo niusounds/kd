@@ -13,9 +13,7 @@ fun main() {
         val rms = Rms()
         launch {
             Kd(config = AudioConfig(channels = 2, sampleRate = 48000)) {
-                add(ReaStreamInput())
-//                add(rms)
-                add(AudioOutput())
+                ReaStreamInput() + rms + AudioOutput()
             }.launch()
         }
         launch {

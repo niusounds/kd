@@ -17,23 +17,18 @@ fun main() {
         val rms2 = Rms()
         launch {
             Kd {
-                add(AudioInput())
-                add(
-                    Split(
-                        rms1,
-                        Group(
-                            Gain(value = 0.1f),
-                            rms2,
-                        )
+                AudioInput() + Split(
+                    rms1, Group(
+                        Gain(value = 0.1f),
+                        rms2,
                     )
                 )
             }.launch()
         }
         launch {
-            combine(rms1.flow, rms2.flow) { rms1, rms2 -> "rms1: $rms1 rms2:$rms2" }
-                .sample(1000).collect {
-                    println(it)
-                }
+            combine(rms1.flow, rms2.flow) { rms1, rms2 -> "rms1: $rms1 rms2:$rms2" }.sample(1000).collect {
+                println(it)
+            }
         }
     }
 }

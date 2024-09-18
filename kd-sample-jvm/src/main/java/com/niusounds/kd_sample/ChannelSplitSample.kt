@@ -10,10 +10,12 @@ import kotlinx.coroutines.runBlocking
 fun main() {
     runBlocking {
         Kd(config = AudioConfig(channels = 2, sampleRate = 44100)) {
-            add(ChannelSplit { channel ->
-                SinWave().apply { gain = 0.1f; frequency = 440f * (channel + 1) }
-            })
-            add(AudioOutput())
+            ChannelSplit { channel ->
+                SinWave().apply {
+                    gain = 0.1f
+                    frequency = 440f * (channel + 1)
+                }
+            } + AudioOutput()
         }.launch()
     }
 }

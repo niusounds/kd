@@ -8,8 +8,7 @@ import kotlinx.coroutines.runBlocking
 fun main() {
     runBlocking {
         Kd {
-            add(AudioInput())
-            add(AudioOutput())
+            AudioInput() + AudioOutput()
         }.launch()
     }
 }
