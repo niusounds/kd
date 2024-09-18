@@ -20,8 +20,7 @@ kd uses node based processing style.
 ```kotlin
 // Simply pass-through audio input signal to output device.
 Kd {
-    add(AudioInput())
-    add(AudioOutput())
+    AudioInput() + AudioOutput()
 }.launch()
 ```
 
@@ -35,8 +34,10 @@ graph LR
 ```kotlin
 // Generate 440hz sine wave and play it
 Kd(config = AudioConfig(channels = 2, sampleRate = 44100)) {
-    add(SinWave().apply { gain = 0.1f; frequency = 440f })
-    add(AudioOutput())
+    SinWave().apply {
+        gain = 0.1f
+        frequency = 440f
+    } + AudioOutput()
 }.launch()
 ```
 
@@ -49,10 +50,12 @@ graph LR
 // Create two oscilator one for L channel and another for R channel.
 // These oscilators generate different frequency sin-waves.
 Kd(config = AudioConfig(channels = 2, sampleRate = 44100)) {
-    add(ChannelSplit { channel ->
-        SinWave().apply { gain = 0.1f; frequency = 440f * (channel + 1) }
-    })
-    add(AudioOutput())
+    ChannelSplit { channel ->
+        SinWave().apply {
+            gain = 0.1f
+            frequency = 440f * (channel + 1)
+        }
+    } + AudioOutput()
 }.launch()
 ```
 
@@ -66,8 +69,7 @@ kd can process ReaStream audio signal sent from REAPER.
 
 ```kotlin
 Kd(config = AudioConfig(channels = 2, sampleRate = 48000)) {
-    add(ReaStreamInput())
-    add(AudioOutput())
+    ReaStreamInput() + AudioOutput()
 }.launch()
 ```
 
