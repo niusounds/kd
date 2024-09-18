@@ -56,10 +56,10 @@ interface Node {
 fun Kd(
     config: AudioConfig = AudioConfig(),
     coroutineContext: CoroutineContext = Dispatchers.IO,
-    setup: () -> Node,
+    nodeBuilder: () -> Node,
 ): Kd {
     return Kd(
-        root = setup(),
+        root = nodeBuilder(),
         config = config,
         coroutineContext = coroutineContext
     )
