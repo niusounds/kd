@@ -5,8 +5,12 @@ import com.niusounds.kd.Node
 import com.niusounds.kd.util.extractSingleChannel
 import com.niusounds.kd.util.writeSingleChannel
 
+/**
+ * 加工Node
+ * 前のNodeからの音声をチャンネルごとに分けて各チャンネルごとに異なるNodeを適用させて出力する。
+ */
 class ChannelSplit(
-    private val nodeFactory: (channel: Int) -> Node
+    private val channelNodeBuilder: (channel: Int) -> Node
 ) : Node {
     private var frameSize: Int = 0
     private var channels: Int = 0
@@ -18,7 +22,7 @@ class ChannelSplit(
         channels = config.channels
 
         val monoConfig = config.copy(channels = 1)
-        nodes = List(config.channels, nodeFactory)
+        nodes = List(config.channels, channelNodeBuilder)
         nodes.forEach { it.configure(monoConfig) }
 
         singleChannelAudio = FloatArray(frameSize)
