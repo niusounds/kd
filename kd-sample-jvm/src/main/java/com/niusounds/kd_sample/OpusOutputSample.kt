@@ -12,9 +12,7 @@ fun main() {
         val opusOutput = OpusOutput()
         launch {
             Kd {
-                add(AudioInput())
-                add(AudioOutput())
-                add(opusOutput)
+                AudioInput() + AudioOutput() + opusOutput
             }.launch()
         }
         launch {

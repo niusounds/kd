@@ -3,6 +3,10 @@ package com.niusounds.kd.node
 import com.niusounds.kd.Node
 import kotlin.random.Random
 
+/**
+ * 入力Node
+ * ホワイトノイズを生成する。
+ */
 class WhiteNoise : Node {
     var gain: Float = 1.0f
 

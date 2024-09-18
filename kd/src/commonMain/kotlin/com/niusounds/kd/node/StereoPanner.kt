@@ -3,6 +3,11 @@ package com.niusounds.kd.node
 import com.niusounds.kd.AudioConfig
 import com.niusounds.kd.Node
 
+/**
+ * 加工Node
+ * ステレオ音声のパンニングを行う。
+ * チャンネル数が2の場合のみ動作する。
+ */
 class StereoPanner : Node {
     var value: Float = 0.0f
 

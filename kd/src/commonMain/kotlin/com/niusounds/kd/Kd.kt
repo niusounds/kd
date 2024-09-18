@@ -47,26 +47,30 @@ interface Node {
      * [Kd.launch]を呼び出したコルーチンスコープがキャンセルされ、音声処理が終了された時に呼ばれる。
      */
     fun release() {}
+
+    operator fun plus(other: Node): Node {
+        return Group(this, other)
+    }
 }
 
 fun Kd(
     config: AudioConfig = AudioConfig(),
     coroutineContext: CoroutineContext = Dispatchers.IO,
-    setup: Kd.() -> Unit,
+    nodeBuilder: () -> Node,
 ): Kd {
-    return Kd(config, coroutineContext).apply(setup)
+    return Kd(
+        root = nodeBuilder(),
+        config = config,
+        coroutineContext = coroutineContext
+    )
 }
 
 class Kd(
+    private val root: Node,
     private val config: AudioConfig,
     private val coroutineContext: CoroutineContext,
 ) {
-    private var nodes = Group(emptyList())
     private val stopped = MutableStateFlow(false)
-
-    fun add(node: Node) {
-        nodes += node
-    }
 
     fun start() {
         stopped.value = false
@@ -81,25 +85,25 @@ class Kd(
             try {
                 val audio = FloatArray(config.frameSize * config.channels)
 
-                nodes.configure(config)
-                nodes.start()
+                root.configure(config)
+                root.start()
 
                 while (coroutineContext.isActive) {
 
                     if (stopped.value) {
-                        nodes.stop()
+                        root.stop()
                         stopped.first { !it } // wait until stopped.value = false
-                        nodes.start()
+                        root.start()
                     }
 
-                    nodes.process(audio)
+                    root.process(audio)
                 }
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                nodes.release()
+                root.release()
             }
         }
     }

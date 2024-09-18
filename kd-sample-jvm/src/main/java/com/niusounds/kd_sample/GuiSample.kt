@@ -23,10 +23,10 @@ fun main() {
     // Run audio in background
     GlobalScope.launch {
         Kd(config = AudioConfig(channels = 2)) {
-            add(AudioInput())
-            add(gain)
-            add(panner)
-            add(AudioOutput())
+            AudioInput() +
+                    gain +
+                    panner +
+                    AudioOutput()
         }.launch()
     }
 
