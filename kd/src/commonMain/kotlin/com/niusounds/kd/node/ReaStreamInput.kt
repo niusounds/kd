@@ -10,6 +10,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * 入力Node
+ * ReaStream VSTプラグインからの音声を受け取り、出力する。
+ */
 class ReaStreamInput(
     private val port: Int = 58710,
     private val identifier: String = "default",

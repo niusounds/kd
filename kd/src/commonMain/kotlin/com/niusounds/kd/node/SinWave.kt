@@ -5,6 +5,10 @@ import com.niusounds.kd.Node
 import kotlin.math.PI
 import kotlin.math.sin
 
+/**
+ * 入力Node
+ * サイン波を出力する。
+ */
 class SinWave : Node {
     var frequency: Float = 440f
     var gain: Float = 1.0f
