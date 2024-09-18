@@ -32,8 +32,4 @@ class Group(
     override fun release() {
         nodes.forEach { it.release() }
     }
-
-    operator fun plus(node: Node): Group {
-        return Group(nodes + node)
-    }
 }

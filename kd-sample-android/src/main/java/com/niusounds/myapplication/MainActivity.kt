@@ -32,10 +32,10 @@ class MainActivity : ComponentActivity() {
                 val opusOutput = OpusOutput()
                 lifecycleScope.launch {
                     Kd {
-                        add(AudioInput())
-                        add(SimplePitchShifterNode().apply { pitch = 2.0 })
-                        add(AudioOutput())
-                        add(opusOutput)
+                        AudioInput() +
+                                SimplePitchShifterNode().apply { pitch = 2.0 } +
+                                AudioOutput() +
+                                opusOutput
                     }.launch()
                 }
                 lifecycleScope.launch {
