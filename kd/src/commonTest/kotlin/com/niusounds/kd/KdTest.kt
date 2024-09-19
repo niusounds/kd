@@ -17,7 +17,7 @@ class KdTest {
         val node = MockNode()
         val config = AudioConfig()
         val kd = Kd(config = config) {
-            add(node)
+            node
         }
 
         // initial state
