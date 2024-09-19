@@ -2,8 +2,9 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidApplication) apply false
-    alias(libs.plugins.jetbrainsKotlinAndroid) apply false
-    alias(libs.plugins.jetbrainsKotlinJvm) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+    alias(libs.plugins.kotlinJvm) apply false
+    alias(libs.plugins.kotlinComposeCompiler) apply false
     alias(libs.plugins.androidLibrary) apply false
     kotlin("multiplatform") version libs.versions.kotlin apply false
 }

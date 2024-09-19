@@ -1,6 +1,6 @@
 plugins {
     application
-    alias(libs.plugins.jetbrainsKotlinJvm)
+    alias(libs.plugins.kotlinJvm)
 }
 
 java {
