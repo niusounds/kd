@@ -5,9 +5,9 @@ import com.niusounds.kd.reastream.ReaStreamAudioPacket
 import io.ktor.network.selector.ActorSelectorManager
 import io.ktor.network.sockets.InetSocketAddress
 import io.ktor.network.sockets.aSocket
-import io.ktor.utils.io.core.readBytes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.io.readByteArray
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -26,7 +26,7 @@ class ReaStreamInput(
             .bind(InetSocketAddress("", port))
 
         for (data in server.incoming) {
-            val bytes = data.packet.readBytes()
+            val bytes = data.packet.readByteArray()
             val packet = ReaStreamAudioPacket.readFromBytes(bytes)
             val samples = packet?.samples ?: continue
             if (packet.identifier == identifier && packet.sampleRate == config.sampleRate && packet.channels == config.channels) {
