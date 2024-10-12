@@ -27,7 +27,7 @@ class KdTest {
         assertFalse(node.released)
 
         // node.configure() and node.start() will be called after kd.launch()
-        val kdJob = launch {
+        val kdJob = backgroundScope.launch {
             kd.launch()
         }
         runCurrent()
