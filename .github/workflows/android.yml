@@ -24,3 +24,10 @@ jobs:
     - uses: gradle/gradle-build-action@v3
 
     - run: ./gradlew kd:build
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Test results
+        path: kd/build/reports/tests
