@@ -6,9 +6,7 @@ plugins {
 kotlin {
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
+            kotlinOptions.jvmTarget = "17"
         }
     }
     jvm {
@@ -45,7 +43,7 @@ kotlin {
 
 android {
     namespace = "com.niusounds.kd"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24
