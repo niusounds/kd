@@ -5,14 +5,8 @@ plugins {
 
 kotlin {
     androidTarget {
-        compilations.all {
-            kotlinOptions.jvmTarget = "17"
-        }
     }
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "17"
-        }
         testRuns["test"].executionTask.configure {
             useJUnitPlatform()
         }
