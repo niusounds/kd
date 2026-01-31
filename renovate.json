@@ -7,7 +7,7 @@
     {
       "groupName": "All Dependencies",
       "matchPackagePatterns": [
-        "*"
+        ".*"
       ]
     }
   ]
