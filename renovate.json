@@ -5,9 +5,17 @@
   ],
   "packageRules": [
     {
-      "groupName": "All Dependencies",
-      "matchPackagePatterns": [
-        ".*"
+      "groupName": "Kotlin",
+      "matchPackagePrefixes": [
+        "org.jetbrains.kotlin",
+        "composeOptions"
+      ]
+    },
+    {
+      "groupName": "Other Dependencies",
+      "excludePackagePrefixes": [
+        "org.jetbrains.kotlin",
+        "composeOptions"
       ]
     }
   ]
