@@ -1,10 +1,12 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
+    id("com.android.kotlin.multiplatform.library")
     kotlin("multiplatform")
 }
 
 kotlin {
-    androidTarget {
+    android {
+        namespace = "com.niusounds.kd"
+        compileSdk = 36
     }
     jvm {
         testRuns["test"].executionTask.configure {
@@ -32,30 +34,5 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.test)
             }
         }
-    }
-}
-
-android {
-    namespace = "com.niusounds.kd"
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
 }
