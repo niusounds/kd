@@ -23,3 +23,4 @@ rootProject.name = "kd"
 include(":kd")
 include(":kd-sample-android")
 include(":kd-sample-jvm")
+include(":kd-android-native")

@@ -44,17 +44,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        externalNativeBuild {
-            cmake {
-                cppFlags("")
-            }
-        }
-    }
-    externalNativeBuild {
-        cmake {
-            path("src/androidMain/CMakeLists.txt")
-        }
     }
     buildTypes {
         release {
