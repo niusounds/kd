@@ -13,6 +13,9 @@
     },
     {
       "groupName": "Other Dependencies",
+      "matchPackagePatterns": [
+        ".*"
+      ],
       "excludePackagePrefixes": [
         "org.jetbrains.kotlin",
         "composeOptions"
