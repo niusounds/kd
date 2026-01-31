@@ -10,6 +10,16 @@
         "org.jetbrains.kotlin",
         "composeOptions"
       ]
+    },
+    {
+      "groupName": "Other Dependencies",
+      "matchPackagePatterns": [
+        ".*"
+      ],
+      "excludePackagePrefixes": [
+        "org.jetbrains.kotlin",
+        "composeOptions"
+      ]
     }
   ]
 }
